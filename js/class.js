@@ -3,15 +3,13 @@ class Menu {
         this.nom = nom;
         this.lien = lien;
     }
-    volee = () => {
-        const men = document.createElement('ul');
+    volee() {
         const li = document.createElement('li');
         const nav = document.createElement('a');
-        li.textContent = this.nom;
-        nav.textContent = this.lien;
+        nav.textContent = this.nom;
+        nav.href = this.lien;
         li.appendChild(nav);
-        men.appendChild(li);
-        return men;
+        return li;
     }
 }
 

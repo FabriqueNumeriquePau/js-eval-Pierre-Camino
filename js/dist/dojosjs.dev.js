@@ -31,6 +31,8 @@ for (var i = 0; i < fleche.length; i++) {
 
 var promise = fetch("data/menu.json");
 console.log(promise);
+var men = document.createElement("ul");
+var men2 = document.createElement('ul');
 promise.then(function (response) {
   return response.json();
 }).then(function (data) {
@@ -39,11 +41,12 @@ promise.then(function (response) {
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = data.principal[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var lien_head = _step.value;
       var lien_nav = new _class["default"](lien_head.nom, lien_head.lien);
       var affichage = lien_nav.volee();
-      document.querySelector("main > header > nav").appendChild(affichage);
+      men.appendChild(affichage);
+      document.querySelector("main > header > nav").appendChild(men);
     }
   } catch (err) {
     _didIteratorError = true;
@@ -56,6 +59,37 @@ promise.then(function (response) {
     } finally {
       if (_didIteratorError) {
         throw _iteratorError;
+      }
+    }
+  }
+});
+var promise2 = fetch("data/menu.json");
+promise2.then(function (response) {
+  return response.json();
+}).then(function (data) {
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = data.pied[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var lien_head = _step2.value;
+      var lien_nav = new _class["default"](lien_head.nom, lien_head.lien);
+      var affichage = lien_nav.volee();
+      men2.appendChild(affichage);
+      document.querySelector("main > footer").appendChild(men2);
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+        _iterator2["return"]();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
       }
     }
   }

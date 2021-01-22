@@ -29,18 +29,32 @@ import Menu from "/js/class.js";
 
 const promise = fetch("data/menu.json");
 console.log(promise);
+const men = document.createElement("ul");
+const men2 = document.createElement('ul');
 
 promise.then(response => response.json())
 
 .then(data => {
-    for(let lien_head of data) {
+    for(let lien_head of data.principal) {
         const lien_nav = new Menu(lien_head.nom, lien_head.lien);
         const affichage = lien_nav.volee();
-        document.querySelector("main > header > nav").appendChild(affichage);
+        men.appendChild(affichage);
+        document.querySelector("main > header > nav").appendChild(men);
     }
 });
 
+const promise2 = fetch("data/menu.json");
 
+promise2.then(response => response.json())
+
+.then(data => {
+    for(let lien_head of data.pied) {
+        const lien_nav = new Menu(lien_head.nom, lien_head.lien);
+        const affichage = lien_nav.volee();
+        men2.appendChild(affichage);
+        document.querySelector("main > footer").appendChild(men2);
+    }
+});
 
 // Test
 // const requete = new XMLHttpRequest;
