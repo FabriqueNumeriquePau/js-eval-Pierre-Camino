@@ -14,14 +14,32 @@ maDiv.addEventListener('mouseleave', () => {
 // Etape 2
 
 
-let fleche = document.getElementsByClassName("picto");
-// console.log(fleche);
+const article = document.querySelectorAll("main > section > section > article > header");
 
-for(let i = 0; i < fleche.length; i++) {
-    fleche.item(i).addEventListener("click", () => {
-        fleche.item(i).parentNode.nextElementSibling.style.visibility = "visible";
-    });
-};
+article.forEach(fleche => {
+    fleche.addEventListener("click", clic => {
+        const div = fleche.nextSibling;
+        if(div.style.visibility !== "visible") {
+            div.style.visibility = "visible";
+            div.style.height = "auto";
+        }
+        else {
+            div.style.visibility = "hidden";
+            div.style.height = "0px";
+        }
+    })
+})
+
+// for(let i = 0; i < fleche.length; i++) {
+//     fleche.item(i).addEventListener("click", () => {
+//         if(fleche.item(i).parentNode.nextElementSibling.style.visibility = "hidden"){
+//             fleche.item(i).parentNode.nextElementSibling.style.visibility = "visible"
+//         }
+//         else {
+//             fleche.item(i).parentNode.nextElementSibling.style.visibility = "hidden"
+//         }
+//     });
+// };
 
 // // Etape 3
 
@@ -41,13 +59,6 @@ promise.then(response => response.json())
         men.appendChild(affichage);
         document.querySelector("main > header > nav").appendChild(men);
     }
-});
-
-const promise2 = fetch("data/menu.json");
-
-promise2.then(response => response.json())
-
-.then(data => {
     for(let lien_head of data.pied) {
         const lien_nav = new Menu(lien_head.nom, lien_head.lien);
         const affichage = lien_nav.volee();
@@ -56,35 +67,25 @@ promise2.then(response => response.json())
     }
 });
 
-// Test
-// const requete = new XMLHttpRequest;
-// requete.open("GET", "data/menu.json");
-// requete.responseType = "json";
-// requete.send();
 
 
-// requete.onload = () => {
-//     if(requete.status != 200) {
-//         alert("Erreur " + requete.status + " : " + requete.statusText);
-//     }
-//     else {
-//         const donnee = requete.response;
-//         volee(donnee);
-//     }
-// }
+// Etape 4
 
-// function volee(donnee) {
-//     for (let i = 0; i< donnee.length; i++) {
-//         console.log(donnee);
-//         const men = document.createElement('ul');
-//         const li = document.createElement('li');
-//         const nav = document.createElement('a');
+import SousMenu from "/js/class.js";
 
-//         li.textContent = donnee[i]['principal'].nom;
-//         nav.textContent = donnee[i].principal.lien;
+const sousmenu = fetch("data/menu.json");
+const sous = document.createElement("ul");
 
-//         li.appendChild(nav);
-//         men.appendChild(li);
-//         document.querySelector("main > header > nav").appendChild(men);
-//     }
-// }
+sousmenu.then(response => response.json())
+
+.then(data => {
+    const data2 = data.principal[1];
+    const data3 = data2.sousmenus;
+    console.log(data3);
+    for(let lien_sous of data3) {
+        const lien_2 = new SousMenu(lien_sous.nom, lien_sous.lien);
+        const affichage = lien_2.sousmen();
+        men.appendChild(affichage);
+        document.getElementsByTagName("li")[1].appendChild(sous);
+    }
+});
